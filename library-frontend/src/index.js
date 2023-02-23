@@ -3,31 +3,17 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 
 import {
-    ApolloClient, InMemoryCache, gql
+    ApolloClient, InMemoryCache, gql, ApolloProvider
 } from '@apollo/client'
 
-// code creates a new client object, which is then used to send a query to the server
 const client = new ApolloClient({
     uri: 'http://localhost:4000',
     cache: new InMemoryCache(),
 })
 
-const query = gql`
-    query {
-        allPersons {
-            name,
-            phone,
-            address {
-                street,
-                city
-            }
-            id
-        }
-    }
-`
-
-client.query({ query }).then((response) => {
-    console.log(response.data)
-})
-
-ReactDOM.createRoot(document.getElementById('root')).render(<App />)
+ReactDOM.createRoot(document.getElementById('root')).render(
+    // The client can be made accessible for all components of the application by wrapping the App component with ApolloProvider
+    <ApolloProvider client={client}>
+        <App />
+    </ApolloProvider>
+)
