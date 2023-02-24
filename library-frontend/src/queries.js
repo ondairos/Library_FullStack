@@ -41,3 +41,13 @@ mutation AddBook($title: String!, $author: String!, $published: String) {
   }
 }
 `
+
+export const EDIT_PUBLISH_DATE = gql`
+mutation EditPublished($title: String!, $published: String!) {
+  editPublished(title: $title, published: $published) {
+    title
+    published
+    id
+  }
+}
+`

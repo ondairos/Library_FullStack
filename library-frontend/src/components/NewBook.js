@@ -23,7 +23,7 @@ const NewBook = (props) => {
     }
   })
 
-  
+
   if (!props.show) {
     return null
   }
@@ -43,6 +43,7 @@ const NewBook = (props) => {
     setGenres([])
     setGenre('')
   }
+
 
   const addGenre = () => {
     setGenres(genres.concat(genre))
