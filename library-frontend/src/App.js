@@ -22,7 +22,9 @@ query {
 
 const App = () => {
   const [page, setPage] = useState('authors')
-  const result = useQuery(ALL_BOOKS)
+  const result = useQuery(ALL_BOOKS, {
+    pollInterval: 2000
+  })
 
   if (result.loading) {
     return <div>loading...</div>
@@ -42,7 +44,7 @@ const App = () => {
       <Authors show={page === 'authors'} />
 
       {/* <Books show={page === 'books'} books={result.data.allBooks} /> */}
-      <Books show={page === 'books'} books={result.data.allBooks}/>
+      <Books show={page === 'books'} books={result.data.allBooks} />
 
       <NewBook show={page === 'add'} />
     </div>
