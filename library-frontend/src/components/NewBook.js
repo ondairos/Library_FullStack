@@ -1,11 +1,27 @@
 import { useState } from 'react'
+import { gql, useMutation } from '@apollo/client'
+
+const CREATE_BOOK = gql`
+mutation AddBook($title: String!, $author: String!, $published: String) {
+  addBook(title: $title, author: $author, published: $published) {
+    title,
+    author,
+    published
+    id
+  }
+}
+`
 
 const NewBook = (props) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [published, setPublished] = useState('')
+
   const [genre, setGenre] = useState('')
   const [genres, setGenres] = useState([])
+
+  // create book object from useMutation hook
+  const [createBook] = useMutation(CREATE_BOOK)
 
   if (!props.show) {
     return null
@@ -15,6 +31,10 @@ const NewBook = (props) => {
     event.preventDefault()
 
     console.log('add book...')
+    //use createBook from useMutation hook
+    createBook({
+      variables: { title, author, published }
+    })
 
     setTitle('')
     setPublished('')
