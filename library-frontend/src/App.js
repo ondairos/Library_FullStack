@@ -4,21 +4,7 @@ import Books from './components/Books'
 import NewBook from './components/NewBook'
 
 import { gql, useQuery } from '@apollo/client'
-
-
-
-const ALL_BOOKS = gql`
-query {
-    allBooks {
-        title,
-        published,
-        author,
-        id
-    }
-}
-`
-
-
+import { ALL_BOOKS } from './queries'
 
 const App = () => {
   const [page, setPage] = useState('authors')

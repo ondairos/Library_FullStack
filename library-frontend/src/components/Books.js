@@ -1,15 +1,6 @@
 import { useState } from 'react'
 import { gql, useQuery } from '@apollo/client'
-
-const FIND_SPECIFIC_BOOK = gql`  
-query FindBook($titleToSearch: String!) {
-  findBook(title: $titleToSearch) {
-    title
-    author
-    published
-  }
-}
-`
+import { FIND_SPECIFIC_BOOK } from '../queries'
 
 //book compo
 const Book = ({ book, onClose }) => {
