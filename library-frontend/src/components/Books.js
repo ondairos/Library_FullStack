@@ -6,7 +6,7 @@ query FindBook($titleToSearch: String!) {
   findBook(title: $titleToSearch) {
     title
     author
-    genres
+    published
   }
 }
 `
@@ -17,7 +17,7 @@ const Book = ({ book, onClose }) => {
     <div>
       <h2>{book.title}</h2>
       <div>
-        {book.author}  ||Genres: {book.genres}
+        {book.author} {book.published}
       </div>
       <div>
         <button onClick={onClose}>Close</button>
