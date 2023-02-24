@@ -2,15 +2,24 @@ import { gql } from '@apollo/client'
 
 export const ALL_BOOKS = gql`
 query {
-    allBooks {
-        title,
-        published,
-        author,
-        id
-    }
+  allBooks {
+    title,
+    published,
+    author,
+    id
+  }
 }
 `
 
+export const ALL_AUTHORS = gql`
+query {
+  allAuthors {
+    name
+    born
+    bookCount
+  }
+}
+`
 
 export const FIND_SPECIFIC_BOOK = gql`  
 query FindBook($titleToSearch: String!) {

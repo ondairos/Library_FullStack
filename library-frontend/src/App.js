@@ -5,7 +5,7 @@ import NewBook from './components/NewBook'
 import { Notify } from './components/Notify'
 
 import { useQuery } from '@apollo/client'
-import { ALL_BOOKS } from './queries'
+import { ALL_BOOKS, ALL_AUTHORS } from './queries'
 
 const App = () => {
   const [page, setPage] = useState('authors')
@@ -13,6 +13,7 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
 
   const result = useQuery(ALL_BOOKS)
+  const resultAuthors = useQuery(ALL_AUTHORS)
 
   //notify function to setError to state and remove the notification after 8000secs
   const notify = (message) => {
@@ -35,7 +36,7 @@ const App = () => {
         </div>
       </div>
 
-      <Authors show={page === 'authors'} />
+      <Authors show={page === 'authors'} authors={resultAuthors.data.allAuthors} />
 
       {/* <Books show={page === 'books'} books={result.data.allBooks} /> */}
       <Books show={page === 'books'} books={result.data.allBooks} />
