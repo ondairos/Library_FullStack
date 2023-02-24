@@ -1,23 +1,47 @@
-// import { gql, useQuery } from '@apollo/client'
+import { useState } from 'react'
+import { gql, useQuery } from '@apollo/client'
 
-// const findSpecificBook = gql`  
-// query FindBook($title: String!) {
-//   findBook(title: $title) {
-//     title
-//     author
-//     genres
-//   }
-// }
-// `
+const FIND_SPECIFIC_BOOK = gql`  
+query FindBook($titleToSearch: String!) {
+  findBook(title: $titleToSearch) {
+    title
+    author
+  }
+}
+`
 
+//book compo
+const Book = ({ book, onClose }) => {
+  return (
+    <div>
+      <h2>{book.title}</h2>
+      <div>
+        {book.author} {book.genres}
+      </div>
+      <div>
+        <button onClick={onClose}>Close</button>
+      </div>
+    </div>
+  )
+}
 
 const Books = (props) => {
-  // if (props.books.show) {
-  //   console.log('no show show!')
-  //   return null
-  // }
+  const [titleToSearch, setTitleToSearch] = useState(null)
+  const titleSearchResult = useQuery(FIND_SPECIFIC_BOOK, {
+    variables: { titleToSearch },
+    skip: !titleToSearch
+  })
 
-  // const books = []
+
+  // conditional rendering
+  if (titleToSearch && titleSearchResult.data) {
+    return (
+      <Book
+        book={titleSearchResult.data.findBook}
+        onClose={() => setTitleToSearch(null)}
+      />
+    )
+  }
 
   return (
     <div>
@@ -34,6 +58,7 @@ const Books = (props) => {
               <td>{a.title}</td>
               <td>{a.author}</td>
               <td>{a.published}</td>
+              <td><button onClick={() => setTitleToSearch(a.title)}>Show Details</button></td>
             </tr>
           ))}
         </tbody>
