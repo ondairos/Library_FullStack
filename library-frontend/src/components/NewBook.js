@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { gql, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { ALL_BOOKS, CREATE_BOOK } from '../queries'
 
 const NewBook = (props) => {
@@ -12,9 +12,18 @@ const NewBook = (props) => {
 
   // create book object from useMutation hook
   const [createBook] = useMutation(CREATE_BOOK, {
-    refetchQueries: [{ query: ALL_BOOKS }]
+    refetchQueries: [{ query: ALL_BOOKS }],
+    onError: (error) => {
+
+      // const myTestObject = JSON.stringify(error)
+      const errorMessageNow = error.graphQLErrors[0].message
+      // const errors = error.graphQLErrors[0]
+      // const messages = Object.values(errors).map(element => element.message).join('\n')
+      props.setError(errorMessageNow)
+    }
   })
 
+  
   if (!props.show) {
     return null
   }

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { FIND_SPECIFIC_BOOK } from '../queries'
 
 //book compo
