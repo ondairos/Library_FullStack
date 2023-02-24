@@ -1,14 +1,27 @@
-const Books = (props) => {
-  if (!props.show) {
-    return null
-  }
+// import { gql, useQuery } from '@apollo/client'
 
-  const books = []
+// const findSpecificBook = gql`  
+// query FindBook($title: String!) {
+//   findBook(title: $title) {
+//     title
+//     author
+//     genres
+//   }
+// }
+// `
+
+
+const Books = (props) => {
+  // if (props.books.show) {
+  //   console.log('no show show!')
+  //   return null
+  // }
+
+  // const books = []
 
   return (
     <div>
       <h2>books</h2>
-
       <table>
         <tbody>
           <tr>
@@ -16,7 +29,7 @@ const Books = (props) => {
             <th>author</th>
             <th>published</th>
           </tr>
-          {books.map((a) => (
+          {props.books.map((a) => (
             <tr key={a.title}>
               <td>{a.title}</td>
               <td>{a.author}</td>

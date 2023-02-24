@@ -3,7 +3,7 @@ import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 
-import { ApolloClient, InMemoryCache, gql, useQuery } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 
 
 
@@ -35,13 +35,14 @@ const App = () => {
         <button onClick={() => setPage('books')}>books</button>
         <button onClick={() => setPage('add')}>add book</button>
         <div>
-          {/* {result.data.allBooks.map(book => book.title).join(', ')} */}
+
         </div>
       </div>
 
       <Authors show={page === 'authors'} />
 
-      <Books show={page === 'books'} />
+      {/* <Books show={page === 'books'} books={result.data.allBooks} /> */}
+      <Books show={page === 'books'} books={result.data.allBooks}/>
 
       <NewBook show={page === 'add'} />
     </div>
