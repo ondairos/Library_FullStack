@@ -35,12 +35,12 @@ const App = () => {
         </div>
       </div>
 
-      <Notify errorMessage={errorMessage}></Notify>
       <Authors show={page === 'authors'} />
 
       {/* <Books show={page === 'books'} books={result.data.allBooks} /> */}
       <Books show={page === 'books'} books={result.data.allBooks} />
 
+      <Notify errorMessage={errorMessage}></Notify>
       <NewBook show={page === 'add'} setError={notify} />
     </div>
   )
