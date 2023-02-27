@@ -4,7 +4,7 @@ import App from './App'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 import {
-    ApolloClient, InMemoryCache, gql, ApolloProvider
+    ApolloClient, InMemoryCache, ApolloProvider
 } from '@apollo/client'
 
 const client = new ApolloClient({

@@ -5,13 +5,14 @@ import NewBook from './components/NewBook'
 import { Notify } from './components/Notify'
 
 import { useQuery } from '@apollo/client'
+// react router
+// eslint-disable-next-line no-unused-vars
+import { Routes, Route, Link, useNavigate, useMatch } from 'react-router-dom'
 // eslint-disable-next-line no-unused-vars
 import { ALL_BOOKS, ALL_AUTHORS } from './queries'
 import { EditPublishDateForm } from './components/EditPublishDateForm'
 
 const App = () => {
-  const [page, setPage] = useState('authors')
-
   const [errorMessage, setErrorMessage] = useState(null)
 
   const result = useQuery(ALL_BOOKS)
@@ -30,22 +31,25 @@ const App = () => {
   return (
     <div>
       <div>
-        <button onClick={() => setPage('authors')}>authors</button>
-        <button onClick={() => setPage('books')}>books</button>
-        <button onClick={() => setPage('add')}>add book</button>
-        <div>
-
+        <div className='app_bar'>
+          <Link to='/'>Home</Link>
+          <Link to='/authors'>Authors</Link>
+          <Link to='/books'>Books</Link>
+          <Link to='/add'>Add</Link>
+          <Link to='/edit'>Edit Publish Date</Link>
         </div>
       </div>
 
       {/* {resultAuthors && <Authors show={page === 'authors'} authors={resultAuthors.data.allAuthors} />} */}
-
-      {/* <Books show={page === 'books'} books={result.data.allBooks} /> */}
-      <Books show={page === 'books'} books={result.data.allBooks} />
-
       <Notify errorMessage={errorMessage}></Notify>
-      <NewBook show={page === 'add'} setError={notify} />
-      <EditPublishDateForm />
+
+      <Routes>
+        <Route path='/' element={<div>Books and Authors App</div>}></Route>
+        <Route path='/books' element={<Books books={result.data.allBooks} />}></Route>
+        {/* <Route path='/authors' element={<Authors authors={resultAuthors.data.allAuthors} />}></Route> */}
+        <Route path='/add' element={<NewBook setError={notify} />}></Route>
+        <Route path='/edit' element={<EditPublishDateForm setError={notify} />}></Route>
+      </Routes>
     </div>
   )
 }
