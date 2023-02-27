@@ -32,11 +32,11 @@ const App = () => {
     <div>
       <div>
         <div className='app_bar'>
-          <Link to='/'>Home</Link>
-          <Link to='/authors'>Authors</Link>
-          <Link to='/books'>Books</Link>
-          <Link to='/add'>Add</Link>
-          <Link to='/edit'>Edit Publish Date</Link>
+          <Link to='/'>Home </Link><span>||</span>
+          <Link to='/authors'>Authors </Link><span>||</span>
+          <Link to='/books'>Books </Link><span>||</span>
+          <Link to='/add'>Add </Link><span>||</span>
+          <Link to='/edit'>Edit Publish Date </Link><span>||</span>
         </div>
       </div>
 
