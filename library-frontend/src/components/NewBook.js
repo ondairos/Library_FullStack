@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { ALL_BOOKS, CREATE_BOOK } from '../queries'
+import '../App.css'
 
 const NewBook = (props) => {
   const [title, setTitle] = useState('')
@@ -48,7 +49,7 @@ const NewBook = (props) => {
 
   return (
     <div>
-      <form onSubmit={submit}>
+      <form className='addBook_form' onSubmit={submit}>
         <div>
           title
           <input

@@ -10,3 +10,11 @@ body {
     border: 1px solid black;
     border-radius: 12px;
 }
+
+.addBook_form {
+    margin: 10px;
+    padding: 10px;
+    background-color: antiquewhite;
+    width: 30%;
+    text-align: center;
+}
