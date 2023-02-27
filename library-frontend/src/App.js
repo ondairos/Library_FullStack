@@ -5,6 +5,7 @@ import NewBook from './components/NewBook'
 import { Notify } from './components/Notify'
 
 import { useQuery } from '@apollo/client'
+// eslint-disable-next-line no-unused-vars
 import { ALL_BOOKS, ALL_AUTHORS } from './queries'
 import { EditPublishDateForm } from './components/EditPublishDateForm'
 
