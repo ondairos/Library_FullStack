@@ -24,6 +24,17 @@ const App = () => {
     setTimeout(() => { setErrorMessage(null) }, 8000)
   }
 
+  const Home = () => {
+    return (
+      <div>
+        <h1>Main Page</h1>
+        <hr></hr>
+        <h2>Books and Authors</h2>
+        <hr></hr>
+      </div>
+    )
+  }
+
   if (result.loading) {
     return <div>loading...</div>
   }
@@ -44,7 +55,7 @@ const App = () => {
       <Notify errorMessage={errorMessage}></Notify>
 
       <Routes>
-        <Route path='/' element={<div>Books and Authors App</div>}></Route>
+        <Route path='/' element={<Home />}></Route>
         <Route path='/books' element={<Books books={result.data.allBooks} />}></Route>
         {/* <Route path='/authors' element={<Authors authors={resultAuthors.data.allAuthors} />}></Route> */}
         <Route path='/add' element={<NewBook setError={notify} />}></Route>
