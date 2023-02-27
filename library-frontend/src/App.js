@@ -3,7 +3,6 @@ import { useState } from 'react'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 import { Notify } from './components/Notify'
-
 import { useQuery } from '@apollo/client'
 // react router
 // eslint-disable-next-line no-unused-vars
@@ -11,6 +10,8 @@ import { Routes, Route, Link, useNavigate, useMatch } from 'react-router-dom'
 // eslint-disable-next-line no-unused-vars
 import { ALL_BOOKS, ALL_AUTHORS } from './queries'
 import { EditPublishDateForm } from './components/EditPublishDateForm'
+// css
+import './App.css'
 
 const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
@@ -24,6 +25,7 @@ const App = () => {
     setTimeout(() => { setErrorMessage(null) }, 8000)
   }
 
+  // home component
   const Home = () => {
     return (
       <div>
@@ -43,11 +45,11 @@ const App = () => {
     <div>
       <div>
         <div className='app_bar'>
-          <Link to='/'>Home </Link><span>||</span>
-          <Link to='/authors'>Authors </Link><span>||</span>
-          <Link to='/books'>Books </Link><span>||</span>
-          <Link to='/add'>Add </Link><span>||</span>
-          <Link to='/edit'>Edit Publish Date </Link><span>||</span>
+          <Link to='/' className='linkButton'>Home </Link><span>||</span>
+          <Link to='/authors' className='linkButton'>Authors </Link><span>||</span>
+          <Link to='/books' className='linkButton'>Books </Link><span>||</span>
+          <Link to='/add' className='linkButton'>Add </Link><span>||</span>
+          <Link to='/edit' className='linkButton'>Edit Publish Date </Link><span>||</span>
         </div>
       </div>
 
