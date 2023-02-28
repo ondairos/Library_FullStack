@@ -202,7 +202,20 @@ const resolvers = {
   Mutation: {
     addBook: async (root, args) => {
       const newBook = new Book({ ...args })
-      return newBook.save()
+
+      try {
+        await newBook.save()
+      } catch (error) {
+        throw new GraphQLError('Saving a book failed', {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+            invalidArgs: args.name,
+            error
+          }
+        })
+      }
+
+      return newBook
     },
     editPublished: async (root, args) => {
       // const book = books.find(element => element.title === args.title)
@@ -216,7 +229,19 @@ const resolvers = {
 
       const specificBook = await Book.findOne({ title: args.title })
       specificBook.published = args.published
-      return specificBook.save()
+
+      try {
+        await specificBook.save()
+      } catch (error) {
+        throw new GraphQLError('Editing published date failed', {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+            invalidArgs: args.name,
+            error
+          }
+        })
+      }
+      return specificBook
     },
     editAuthor: (root, args) => {
       // find the index of the author to edit in the authors array
