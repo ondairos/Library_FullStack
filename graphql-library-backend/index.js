@@ -7,11 +7,22 @@ const { v1: uuid } = require('uuid')
 const mongoose = require('mongoose')
 mongoose.set('strictQuery', false)
 const Book = require('./models/book')
+const Author = require('./models/author')
 
 // dotenv
 require('dotenv').config()
 
 const MONGODB_URI = process.env.MONGODB_URI
+
+console.log('connecting to', MONGODB_URI)
+
+//connect
+mongoose.connect(MONGODB_URI)
+  .then(() => {
+    console.log('connected to MongoDB!')
+  }).catch((error) => {
+    console.log('error connection to MongoDB: ', error.message)
+  })
 /*
  * English:
  * It might make more sense to associate a book with its author by storing the author's id in the context of the book instead of the author's name
@@ -160,10 +171,9 @@ const typeDefs = `
 const resolvers = {
   Query: {
     // bookCount: () => books.length,
-    bookCount: (root) => {
-      return books.length
+    bookCount: async () => {
+      Book.collection.countDocuments()
     },
-
     authorCount: () => authors.length,
     // allBooks: () => books,
     // allBooks: (root, args) => {
@@ -176,25 +186,14 @@ const resolvers = {
     //     return books.filter(byAuthor)
 
     // },
-    allBooks: (root, args) => {
-      if (!args.genres) {
-        return books
-      }
-      // This function filters the books array based on the genre provided as an argument and then returns the filtered list of books, with the author's name.
-      return books.filter(book => book.genres.includes(args.genres)).map(book => {
-        const author = authors.find(author => author.name === book.author)
-        return {
-          ...book,
-          author: author.name
-        }
-      })
+    allBooks: async (root, args) => {
+      return Book.find({})
     },
     allAuthors: () => {
-      return authors
+      return Author.find({})
     },
-    findBook: (root, args) => {
-      const foundBook = books.find(element => element.title === args.title)
-      return foundBook || null
+    findBook: async (root, args) => {
+      return Book.findOne({ title: args.title })
     }
   },
   Author: {
@@ -212,31 +211,23 @@ const resolvers = {
   //     }
   // },
   Mutation: {
-    addBook: (root, args) => {
-
-      // error here
-      if (books.find(element => element.title === args.title)) {
-        throw new GraphQLError('Title must be unique', {
-          extensions: {
-            code: 'BAD_USER_INPUT',
-            invalidArgs: args.title
-          }
-        })
-      }
-
-      const newBook = { ...args, id: uuid() }
-      books = books.concat(newBook)
-      return newBook
+    addBook: async (root, args) => {
+      const newBook = new Book({ ...args })
+      return newBook.save()
     },
-    editPublished: (root, args) => {
-      const book = books.find(element => element.title === args.title)
-      if (!book) {
-        return null
-      }
+    editPublished: async (root, args) => {
+      // const book = books.find(element => element.title === args.title)
+      // if (!book) {
+      //   return null
+      // }
 
-      const updatedBook = { ...book, published: args.published }
-      books = books.map(element => element.title === args.title ? updatedBook : element)
-      return updatedBook
+      // const updatedBook = { ...book, published: args.published }
+      // books = books.map(element => element.title === args.title ? updatedBook : element)
+      // return updatedBook
+
+      const specificBook = await Book.findOne({ title: args.title })
+      specificBook.published = args.published
+      return specificBook.save()
     },
     editAuthor: (root, args) => {
       // find the index of the author to edit in the authors array
