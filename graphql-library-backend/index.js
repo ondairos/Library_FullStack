@@ -174,18 +174,7 @@ const resolvers = {
     bookCount: async () => {
       Book.collection.countDocuments()
     },
-    authorCount: () => authors.length,
-    // allBooks: () => books,
-    // allBooks: (root, args) => {
-    //     if (!args.author) {
-    //         return books
-    //     }
-    //     const byAuthor = (book) => {
-    //         return args.author === 'YES' ? book.author : !book.author
-    //     }
-    //     return books.filter(byAuthor)
-
-    // },
+    authorCount: async () => Author.collection.countDocuments(),
     allBooks: async (root, args) => {
       return Book.find({})
     },
