@@ -3,6 +3,15 @@ const { startStandaloneServer } = require('@apollo/server/standalone')
 const { GraphQLError } = require('graphql')
 const { v1: uuid } = require('uuid')
 
+// mongoose
+const mongoose = require('mongoose')
+mongoose.set('strictQuery', false)
+const Book = require('./models/book')
+
+// dotenv
+require('dotenv').config()
+
+const MONGODB_URI = process.env.MONGODB_URI
 /*
  * English:
  * It might make more sense to associate a book with its author by storing the author's id in the context of the book instead of the author's name
