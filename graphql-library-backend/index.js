@@ -205,6 +205,9 @@ const resolvers = {
     },
     findBook: async (root, args) => {
       return Book.findOne({ title: args.title })
+    },
+    me: (root, args, context) => {
+      return context.currentUser
     }
   },
   Author: {
@@ -224,9 +227,22 @@ const resolvers = {
   Mutation: {
     addBook: async (root, args) => {
       const newBook = new Book({ ...args })
+      // add current user
+      const currentUser = context.currentUser
+
+      if (!currentUser) {
+        throw new GraphQLError('not authenticated', {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+          }
+        })
+      }
 
       try {
         await newBook.save()
+        //add book to current user
+        currentUser.userBooks = currentUser.userBooks.concat(newBook)
+        await currentUser.save()
       } catch (error) {
         throw new GraphQLError('Saving a book failed', {
           extensions: {
@@ -325,7 +341,7 @@ startStandaloneServer(server, {
   listen: { port: 4000 },
   context: async ({ req, res }) => {
     const auth = req ? req.headers.authorization : null
-    if (auth && auth.startsWith('Bearer')) {
+    if (auth && auth.startsWith('Bearer ')) {
       const decodedToken = jwt.verify(
         auth.substring(7), process.env.JWT_SECRET
       )
