@@ -131,6 +131,7 @@ const typeDefs = `
     name: String!
     born: Int
     bookCount: Int
+    id: ID!
   }
 
   type Book {
@@ -170,23 +171,32 @@ const typeDefs = `
         title: String!
         published: String
         author: String!
-        genres: String
+        genres: [String]
     ): Book
+
     editPublished(
         title: String!
         published: String!
     ): Book
+
     editAuthor(
         name: String
         born: String
     ): Author
+
     createUser(
       username: String!
+      favoriteGenre: String!
     ): User
+
     login(
       username: String!
       password: String!
     ): Token
+
+    addAsUserBooks(
+      title: String!
+    ): User
   }
 `
 
@@ -239,6 +249,7 @@ const resolvers = {
       }
 
       try {
+
         await newBook.save()
         //add book to current user
         currentUser.userBooks = currentUser.userBooks.concat(newBook)
@@ -326,6 +337,28 @@ const resolvers = {
       }
 
       return { value: jwt.sign(userForToken, process.env.JWT_SECRET) }
+    },
+    addAsUserBooks: async (root, args, { currentUser }) => {
+      const isSpecificUserBooks = (book) => {
+        return currentUser.userBooks.map(element => element._id.toString()).includes(book._id.toString())
+      }
+
+      if (!currentUser) {
+        throw new GraphQLError('wrong credentials', {
+          extensions: {
+            code: 'BAD_USER_INPUT'
+          }
+        })
+      }
+
+      const book = await Book.findOne({ title: args.title })
+      if (!addAsUserBooks(book)) {
+        currentUser.userBooks = currentUser.userBooks.concat(book)
+      }
+
+      await currentUser.save()
+      return currentUser
+
     }
   }
 }
@@ -341,7 +374,7 @@ startStandaloneServer(server, {
   listen: { port: 4000 },
   context: async ({ req, res }) => {
     const auth = req ? req.headers.authorization : null
-    if (auth && auth.startsWith('Bearer ')) {
+    if (auth && auth.toLowerCase().startsWith('bearer ')) {
       const decodedToken = jwt.verify(
         auth.substring(7), process.env.JWT_SECRET
       )
