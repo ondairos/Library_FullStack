@@ -8,7 +8,7 @@ const schema = new mongoose.Schema({
     },
     userBooks: [
         {
-            tupe: mongoose.Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'Book'
         }
     ],
