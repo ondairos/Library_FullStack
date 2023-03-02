@@ -235,7 +235,7 @@ const resolvers = {
   //     }
   // },
   Mutation: {
-    addBook: async (root, args) => {
+    addBook: async (root, args, context) => {
       // add current user
       const currentUser = context.currentUser
       const newBook = new Book({ ...args })
