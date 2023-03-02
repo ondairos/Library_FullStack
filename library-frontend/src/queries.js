@@ -51,3 +51,12 @@ mutation EditPublished($title: String!, $published: String!) {
   }
 }
 `
+
+// login
+export const LOGIN = gql`
+mutation login($username: String!, $password: String!) {
+  login(username: $username, password: $password){
+    value
+  }
+}
+`
