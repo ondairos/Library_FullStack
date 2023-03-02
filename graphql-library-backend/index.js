@@ -137,9 +137,9 @@ const typeDefs = `
   type Book {
     title: String!
     published: String
-    author: String!
+    author: Author!
     id: ID!
-    genres: String
+    genres: [String!]!
   }
 
   type User {
@@ -180,8 +180,8 @@ const typeDefs = `
     ): Book
 
     editAuthor(
-        name: String
-        born: String
+        name: String!
+        born: Int!
     ): Author
 
     createUser(
@@ -226,20 +226,21 @@ const resolvers = {
       return resultBooks.length
     }
   },
-  // Book: {
-  //     author: ({ name, born }) => {
-  //         return {
-  //             name,
-  //             born,
-  //         }
-  //     }
-  // },
+  Book: {
+    author: async (root) => {
+      const author = await Author.findById(root.author)
+      return {
+        id: author.id,
+        name: author.name,
+        born: author.born
+      }
+    }
+  },
   Mutation: {
     addBook: async (root, args, context) => {
       // add current user
       const currentUser = context.currentUser
-      const newBook = new Book({ ...args })
-
+      
       if (!currentUser) {
         throw new GraphQLError('not authenticated', {
           extensions: {
@@ -247,10 +248,11 @@ const resolvers = {
           }
         })
       }
-
+      
+      const newBook = new Book({ ...args })
       // author for new book
       let author = await Author.findOne({ name: args.author })
-
+      
       if (!author) {
         author = await new Author({ name: args.author }).save()
       }
@@ -272,7 +274,7 @@ const resolvers = {
 
       return newBook
     },
-    editPublished: async (root, args,context) => {
+    editPublished: async (root, args, context) => {
       // const book = books.find(element => element.title === args.title)
       // if (!book) {
       //   return null
