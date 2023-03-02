@@ -19,7 +19,7 @@ export const LoginForm = ({ setError, setToken }) => {
         if (result.data) {
             const token = result.data.login.value
             setToken(token)
-            localStorage.setItem('phonenumbers-user-token', token)
+            localStorage.setItem('booksandauthors-user-token', token)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [result.data])
