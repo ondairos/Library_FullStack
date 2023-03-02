@@ -169,14 +169,14 @@ const typeDefs = `
   type Mutation {
     addBook(
         title: String!
-        published: String
+        published: Int!
         author: String!
         genres: [String]
     ): Book
 
     editPublished(
         title: String!
-        published: String!
+        published: Int!
     ): Book
 
     editAuthor(

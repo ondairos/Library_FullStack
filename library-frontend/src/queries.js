@@ -36,11 +36,14 @@ query FindBook($titleToSearch: String!) {
 `
 
 export const CREATE_BOOK = gql`
-mutation AddBook($title: String!, $author: String!, $published: String) {
-  addBook(title: $title, author: $author, published: $published) {
-    title,
-    author,
+mutation AddBook($title: String!, $author: String!, $published: String, $genres:[String!]!) {
+  addBook(title: $title, author: $author, published: $published, genres: $genres) {
+    title
+    author {
+      name
+    }
     published
+    genres
     id
   }
 }
