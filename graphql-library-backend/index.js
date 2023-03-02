@@ -272,7 +272,7 @@ const resolvers = {
 
       return newBook
     },
-    editPublished: async (root, args) => {
+    editPublished: async (root, args,context) => {
       // const book = books.find(element => element.title === args.title)
       // if (!book) {
       //   return null
@@ -298,7 +298,7 @@ const resolvers = {
       }
       return specificBook
     },
-    editAuthor: (root, args) => {
+    editAuthor: (root, args, context) => {
       const currentUser = context.currentUser
       if (!currentUser) {
         throw new AuthenticationError("not authenticated")
