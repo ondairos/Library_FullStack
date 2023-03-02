@@ -14,6 +14,7 @@ export const LoginForm = ({ setError, setToken }) => {
         }
     })
 
+    // Use of the effect hook is necessary to avoid an endless rendering loop.
     useEffect(() => {
         if (result.data) {
             const token = result.data.login.value

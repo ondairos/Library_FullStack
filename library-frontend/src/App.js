@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 import { Notify } from './components/Notify'
-import { useQuery } from '@apollo/client'
+import { useApolloClient, useQuery } from '@apollo/client'
 // react router
 // eslint-disable-next-line no-unused-vars
 import { Routes, Route, Link, useNavigate, useMatch } from 'react-router-dom'
@@ -12,10 +12,12 @@ import { ALL_BOOKS, ALL_AUTHORS } from './queries'
 import { EditPublishDateForm } from './components/EditPublishDateForm'
 // css
 import './App.css'
+import { LoginForm } from './components/LoginForm'
 
 const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [token, setToken] = useState(null)
+  const client = useApolloClient
 
   const result = useQuery(ALL_BOOKS)
   // const resultAuthors = useQuery(ALL_AUTHORS)
@@ -42,6 +44,24 @@ const App = () => {
     return <div>loading...</div>
   }
 
+  // logout
+  const logout = () => {
+    setToken(null)
+    // clear localstorage
+    localStorage.clear()
+    //clear cache
+    client.resetStore()
+  }
+
+  if (!token) {
+    return (
+      <>
+        <Notify errorMessage={errorMessage} />
+        <LoginForm setToken={setToken} setError={notify} />
+      </>
+    )
+  }
+
   return (
     <div>
       <div>
@@ -51,6 +71,7 @@ const App = () => {
           <Link to='/books' className='linkButton'>Books </Link><span>||</span>
           <Link to='/add' className='linkButton'>Add </Link><span>||</span>
           <Link to='/edit' className='linkButton'>Edit Publish Date </Link><span>||</span>
+          <button onClick={logout}>Logout</button>
         </div>
       </div>
 
