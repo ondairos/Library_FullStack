@@ -236,9 +236,9 @@ const resolvers = {
   // },
   Mutation: {
     addBook: async (root, args) => {
-      const newBook = new Book({ ...args })
       // add current user
       const currentUser = context.currentUser
+      const newBook = new Book({ ...args })
 
       if (!currentUser) {
         throw new GraphQLError('not authenticated', {
@@ -248,8 +248,14 @@ const resolvers = {
         })
       }
 
-      try {
+      // author for new book
+      let author = await Author.findOne({ name: args.author })
 
+      if (!author) {
+        author = await new Author({ name: args.author }).save()
+      }
+
+      try {
         await newBook.save()
         //add book to current user
         currentUser.userBooks = currentUser.userBooks.concat(newBook)
