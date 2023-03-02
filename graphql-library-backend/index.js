@@ -293,6 +293,10 @@ const resolvers = {
       return specificBook
     },
     editAuthor: (root, args) => {
+      const currentUser = context.currentUser
+      if (!currentUser) {
+        throw new AuthenticationError("not authenticated")
+      }
       // find the index of the author to edit in the authors array
       const foundIndex = authors.findIndex(element => element.name === args.name)
 
