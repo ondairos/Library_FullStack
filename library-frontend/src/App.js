@@ -17,7 +17,7 @@ import { LoginForm } from './components/LoginForm'
 const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [token, setToken] = useState(null)
-  const client = useApolloClient
+  const client = useApolloClient()
 
   const result = useQuery(ALL_BOOKS)
   // const resultAuthors = useQuery(ALL_AUTHORS)
