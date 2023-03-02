@@ -15,6 +15,7 @@ import './App.css'
 
 const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
+  const [token, setToken] = useState(null)
 
   const result = useQuery(ALL_BOOKS)
   // const resultAuthors = useQuery(ALL_AUTHORS)
