@@ -29,7 +29,9 @@ export const FIND_SPECIFIC_BOOK = gql`
 query FindBook($titleToSearch: String!) {
   findBook(title: $titleToSearch) {
     title
-    author
+    author {
+      name
+    }
     published
   }
 }
@@ -44,7 +46,6 @@ mutation AddBook($title: String!, $author: String!, $published: String, $genres:
     }
     published
     genres
-    id
   }
 }
 `

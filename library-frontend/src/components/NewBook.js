@@ -13,7 +13,7 @@ const NewBook = (props) => {
 
   // create book object from useMutation hook
   const [createBook] = useMutation(CREATE_BOOK, {
-    refetchQueries: [{ query: ALL_BOOKS }, { query: ALL_AUTHORS }],
+    refetchQueries: [{ query: ALL_BOOKS }],
     onError: (error) => {
 
       // const myTestObject = JSON.stringify(error)

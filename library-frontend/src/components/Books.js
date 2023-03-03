@@ -4,6 +4,11 @@ import { FIND_SPECIFIC_BOOK } from '../queries'
 
 //book compo
 const Book = ({ book, onClose }) => {
+
+  if (!book) {
+    return null;
+  }
+
   return (
     <div>
       <h2>{book.title}</h2>
