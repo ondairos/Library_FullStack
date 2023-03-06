@@ -1,5 +1,5 @@
 import { useState } from 'react'
-// import Authors from './components/Authors'
+import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 import { Notify } from './components/Notify'
@@ -20,7 +20,6 @@ const App = () => {
   const client = useApolloClient()
 
   const result = useQuery(ALL_BOOKS)
-  // const resultAuthors = useQuery(ALL_AUTHORS)
 
   //notify function to setError to state and remove the notification after 8000secs
   const notify = (message) => {
@@ -84,6 +83,7 @@ const App = () => {
         {/* <Route path='/authors' element={<Authors authors={resultAuthors.data.allAuthors} />}></Route> */}
         <Route path='/add' element={<NewBook setError={notify} />}></Route>
         <Route path='/edit' element={<EditPublishDateForm setError={notify} />}></Route>
+        <Route path='/authors' element={<Authors />}></Route>
       </Routes>
     </div>
   )
