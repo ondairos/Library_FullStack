@@ -74,13 +74,11 @@ const App = () => {
         </div>
       </div>
 
-      {/* {resultAuthors && <Authors show={page === 'authors'} authors={resultAuthors.data.allAuthors} />} */}
       <Notify errorMessage={errorMessage}></Notify>
 
       <Routes>
         <Route path='/' element={<Home />}></Route>
         <Route path='/books' element={<Books books={result.data.allBooks} />}></Route>
-        {/* <Route path='/authors' element={<Authors authors={resultAuthors.data.allAuthors} />}></Route> */}
         <Route path='/add' element={<NewBook setError={notify} />}></Route>
         <Route path='/edit' element={<EditPublishDateForm setError={notify} />}></Route>
         <Route path='/authors' element={<Authors />}></Route>
