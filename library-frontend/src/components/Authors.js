@@ -19,7 +19,7 @@ const Authors = (props) => {
             <th>born</th>
             <th>books</th>
           </tr>
-          {console.log(`all query authors: ${allQueryAuthors}`)}
+          {/* {console.log(`all query authors: ${allQueryAuthors}`)} */}
           {allQueryAuthors.map((a) => (
             <tr key={a.name}>
               <td>{a.name}</td>
