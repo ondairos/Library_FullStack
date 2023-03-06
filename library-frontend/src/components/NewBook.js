@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useMutation } from '@apollo/client'
+// eslint-disable-next-line no-unused-vars
 import { ALL_BOOKS, CREATE_BOOK, ALL_AUTHORS } from '../queries'
 import '../App.css'
 
