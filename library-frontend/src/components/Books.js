@@ -32,6 +32,7 @@ const Books = (props) => {
 
   // conditional rendering
   if (titleToSearch && titleSearchResult.data) {
+    console.log(`Title to searchresult inside books component: ${titleSearchResult}`);
     return (
       <Book
         book={titleSearchResult.data.findBook}
@@ -50,10 +51,11 @@ const Books = (props) => {
             <th>author</th>
             <th>published</th>
           </tr>
+          {/* {console.log(`props books: ${JSON.stringify(props.books)}`)} */}
           {props.books.map((a) => (
             <tr key={a.title}>
               <td>{a.title}</td>
-              <td>{a.author}</td>
+              <td>{a.author.name}</td>
               <td>{a.published}</td>
               <td><button onClick={() => setTitleToSearch(a.title)}>Show Details</button></td>
             </tr>
