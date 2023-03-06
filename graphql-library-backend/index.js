@@ -144,7 +144,7 @@ const typeDefs = `
 
   type User {
     username: String!
-    userBooks: [Book!]!
+    favouriteGenre: String!
     id: ID!
   }
   
@@ -274,7 +274,6 @@ const resolvers = {
       try {
         await newBook.save()
         //add book to current user
-        currentUser.userBooks = currentUser.userBooks.concat(newBook)
         await currentUser.save()
       } catch (error) {
         throw new GraphQLError('Saving a book failed', {
@@ -372,28 +371,6 @@ const resolvers = {
 
       return { value: jwt.sign(userForToken, process.env.JWT_SECRET) }
     },
-    addAsUserBooks: async (root, args, { currentUser }) => {
-      const isSpecificUserBooks = (book) => {
-        return currentUser.userBooks.map(element => element._id.toString()).includes(book._id.toString())
-      }
-
-      if (!currentUser) {
-        throw new GraphQLError('wrong credentials', {
-          extensions: {
-            code: 'BAD_USER_INPUT'
-          }
-        })
-      }
-
-      const book = await Book.findOne({ title: args.title })
-      if (!addAsUserBooks(book)) {
-        currentUser.userBooks = currentUser.userBooks.concat(book)
-      }
-
-      await currentUser.save()
-      return currentUser
-
-    }
   }
 }
 
@@ -412,7 +389,7 @@ startStandaloneServer(server, {
       const decodedToken = jwt.verify(
         auth.substring(7), process.env.JWT_SECRET
       )
-      const currentUser = await User.findById(decodedToken.id).populate('userBooks')
+      const currentUser = await User.findById(decodedToken.id)
       return { currentUser }
     }
   },

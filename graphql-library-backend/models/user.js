@@ -6,12 +6,7 @@ const schema = new mongoose.Schema({
         required: true,
         minlength: 3
     },
-    userBooks: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Book'
-        }
-    ],
+    favouriteGenre: { type: String },
 })
 
 module.exports = mongoose.model('User', schema)
