@@ -38,7 +38,7 @@ const NewBook = (props) => {
     console.log('add book...')
     //use createBook from useMutation hook
     createBook({
-      variables: { title, author, published, genres }
+      variables: { title, author, published: Number(published), genres }
     })
 
     setTitle('')
