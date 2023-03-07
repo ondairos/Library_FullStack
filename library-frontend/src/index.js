@@ -31,6 +31,7 @@ const authLink = setContext((_, { headers }) => {
     }
 })
 
+//  an HTTP connection as well as a WebSocket connection to the GraphQL server
 const splitLink = split(
     ({ query }) => {
         const definition = getMainDefinition(query)
