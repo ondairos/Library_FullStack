@@ -3,16 +3,33 @@ import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 import { Notify } from './components/Notify'
-import { useApolloClient, useQuery } from '@apollo/client'
+import { useApolloClient, useQuery, useMutation, useSubscription } from '@apollo/client'
 // react router
 // eslint-disable-next-line no-unused-vars
 import { Routes, Route, Link, useNavigate, useMatch } from 'react-router-dom'
 // eslint-disable-next-line no-unused-vars
-import { ALL_BOOKS, ALL_AUTHORS } from './queries'
+import { ALL_BOOKS, ALL_AUTHORS, BOOK_ADDED } from './queries'
 import { EditPublishDateForm } from './components/EditPublishDateForm'
 // css
 import './App.css'
 import { LoginForm } from './components/LoginForm'
+
+// function that takes care of manipulating cache
+export const updateCache = (cache, query, addedBook) => {
+  const uniqByName = (a) => {
+    let seen = new Set()
+    return a.filter((item) => {
+      let k = item.name
+      return seen.has(k) ? false : seen.add(k)
+    })
+  }
+
+  cache.updateQuery(query, ({ allBooks }) => {
+    return {
+      allBooks: uniqByName(allBooks.concat(addedBook)),
+    }
+  })
+}
 
 const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
@@ -26,6 +43,15 @@ const App = () => {
     setErrorMessage(message)
     setTimeout(() => { setErrorMessage(null) }, 8000)
   }
+
+  //useSubscription
+  useSubscription(BOOK_ADDED, {
+    onData: ({ data }) => {
+      const addedBook = data.data.bookAdded
+      notify(`${addedBook.title} added`)
+      updateCache(client.cache, { query: ALL_BOOKS }, addedBook)
+    },
+  })
 
   // home component
   const Home = () => {
