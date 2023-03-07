@@ -48,5 +48,5 @@ To run the application, follow these steps:
 
 
 ## Author
-Ioannis Kantiloros for the FullStackOpen part 8 exercises
-FullStack Open[https://fullstackopen.com]
+- Ioannis Kantiloros for the FullStackOpen part 8 exercises
+- FullStack Open[https://fullstackopen.com]
