@@ -75,6 +75,10 @@ const typeDefs = `
       title: String!
     ): User
   }
+
+  type Subscription {
+    bookAdded: Book!
+  }
 `
 
 module.exports = typeDefs
