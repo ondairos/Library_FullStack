@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { EDIT_PUBLISH_DATE } from '../queries'
 import { useMutation } from '@apollo/client'
 
-export const EditPublishDateForm = () => {
+export const EditPublishDateForm = (props) => {
   const [published, setPublished] = useState('')
   const [title, setTitle] = useState('')
 

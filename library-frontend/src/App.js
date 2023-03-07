@@ -3,12 +3,13 @@ import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 import { Notify } from './components/Notify'
+// eslint-disable-next-line no-unused-vars
 import { useApolloClient, useQuery, useMutation, useSubscription } from '@apollo/client'
 // react router
 // eslint-disable-next-line no-unused-vars
 import { Routes, Route, Link, useNavigate, useMatch } from 'react-router-dom'
 // eslint-disable-next-line no-unused-vars
-import { ALL_BOOKS, ALL_AUTHORS, BOOK_ADDED } from './queries'
+import { ALL_BOOKS, BOOK_ADDED } from './queries'
 import { EditPublishDateForm } from './components/EditPublishDateForm'
 // css
 import './App.css'
@@ -107,7 +108,7 @@ const App = () => {
         <Route path='/books' element={<Books books={result.data.allBooks} />}></Route>
         <Route path='/add' element={<NewBook setError={notify} />}></Route>
         <Route path='/edit' element={<EditPublishDateForm setError={notify} />}></Route>
-        <Route path='/authors' element={<Authors />}></Route>
+        <Route path='/authors' element={<Authors setError={notify}/>}></Route>
       </Routes>
     </div>
   )
