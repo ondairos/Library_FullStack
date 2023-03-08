@@ -16,7 +16,7 @@ const resolvers = {
         },
         authorCount: async () => Author.collection.countDocuments(),
         allBooks: async (root, args) => {
-            return await Book.find({})
+            return await Book.find({}).populate('likesToUser')
         },
         allAuthors: async () => {
             return await Author.find({})

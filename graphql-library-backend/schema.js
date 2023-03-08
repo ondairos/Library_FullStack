@@ -12,6 +12,7 @@ const typeDefs = `
     author: Author!
     id: ID!
     genres: [String!]!
+    likesToUser: [User!]!
   }
 
   type User {

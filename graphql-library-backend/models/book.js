@@ -20,7 +20,13 @@ const schema = new mongoose.Schema({
         {
             type: String
         }
-    ]
+    ],
+    likesToUser: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+        }
+    ],
 })
 
 module.exports = mongoose.model('Book', schema)
